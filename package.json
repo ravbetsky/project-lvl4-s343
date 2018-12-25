@@ -7,16 +7,9 @@
     "node": "9"
   },
   "scripts": {
-    "nodemon": "nodemon",
-    "test": "jest",
-    "babel-node": "babel-node",
-    "flow": "flow",
-    "flow-typed": "flow-typed",
-    "start": "babel-node ./server/bin/slack.js",
-    "eslint": "eslint",
-    "webpack": "webpack",
-    "build-server": "babel server --out-dir dist --source-maps inline",
-    "build-app": "npm run webpack -- -p --env production",
+    "start": "npx babel-node ./server/bin/slack.js",
+    "build-server": "npx babel server --out-dir dist --source-maps inline",
+    "build-app": "npx webpack -p --env production",
     "build": "npm run build-app && npm run build-server",
     "postinstall": "npm run build"
   },
@@ -58,7 +51,7 @@
     "koa-static": "^3.0.0",
     "koa-webpack": "^3.0.2",
     "lodash": "^4.17.10",
-    "npm": "^6.3.0",
+    "npm": "^6.5.0",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.2",
@@ -90,7 +83,7 @@
     "flow-typed": "^2.4.0",
     "jest": "^22.4.3",
     "jest-cli": "^22.4.3",
-    "nodemon": "^1.17.3",
+    "nodemon": "^1.18.8",
     "postcss-loader": "^3.0.0",
     "precss": "^3.1.2"
   }
