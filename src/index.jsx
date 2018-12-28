@@ -32,10 +32,9 @@ const store = createStore(
     messages: [],
     currentChannelId,
   },
-  compose(
-    applyMiddleware(thunk),
-    devtoolMiddleware,
-  ),
+  typeof devtoolMiddleware === 'undefined'
+    ? compose(applyMiddleware(thunk))
+    : compose(applyMiddleware(thunk), devtoolMiddleware),
 );
 
 store.dispatch(fetchChannels());
