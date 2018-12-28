@@ -5,18 +5,49 @@ import faker from 'faker';
 import gon from 'gon';
 import cookies from 'js-cookie';
 import React from 'react';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
 import { render } from 'react-dom';
-// import io from 'socket.io-client';
-import App from './App';
+import io from 'socket.io-client';
+import reducers from './reducers';
+import App from './components/App';
+import { fetchChannels, fetchMessages } from './actions';
 
 if (!cookies.get('user')) {
   cookies.set('user', faker.name.findName());
 }
 
-const state = { ...gon, user: cookies.get('user') };
+const { currentChannelId } = gon;
+
+/* eslint-disable no-underscore-dangle */
+const ext = window.__REDUX_DEVTOOLS_EXTENSION__;
+const devtoolMiddleware = ext && ext();
+/* eslint-enable */
+
+const store = createStore(
+  reducers,
+  {
+    channels: [],
+    messages: [],
+    currentChannelId,
+  },
+  compose(
+    applyMiddleware(thunk),
+    devtoolMiddleware,
+  ),
+);
+
+store.dispatch(fetchChannels());
+store.dispatch(fetchMessages(currentChannelId));
+
+const socket = io();
+socket.on('newMessage', () => store.dispatch(fetchMessages(currentChannelId)));
 
 render(
-  <App {...state} />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('chat'),
 );
 
