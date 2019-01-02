@@ -10,6 +10,9 @@ build:
 	rm -rf dist
 	npm run build
 
+run:
+	node dist/bin/slack.js
+
 test:
 	npm test
 

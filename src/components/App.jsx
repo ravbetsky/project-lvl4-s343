@@ -1,5 +1,5 @@
 import React from 'react';
-import ChannelsList from '../containers/ChannelsList';
+import ChannelsList from './ChannelsList';
 import MessagesList from './MessagesList';
 import NewMessageForm from './NewMessageForm';
 import UserNav from './UserNav';
