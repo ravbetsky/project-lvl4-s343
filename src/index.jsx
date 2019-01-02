@@ -12,7 +12,12 @@ import { render } from 'react-dom';
 import io from 'socket.io-client';
 import reducers from './reducers';
 import App from './components/App';
-import { fetchChannels, fetchMessages, setUserName } from './actions';
+import {
+  fetchChannels,
+  fetchMessages,
+  setUserName,
+  setChannel,
+} from './actions';
 
 if (!cookies.get('user')) {
   cookies.set('user', faker.name.findName());
@@ -40,10 +45,13 @@ const store = createStore(
 
 store.dispatch(setUserName(cookies.get('user')));
 store.dispatch(fetchChannels());
-store.dispatch(fetchMessages(currentChannelId));
+store.dispatch(setChannel(currentChannelId));
 
 const socket = io();
-socket.on('newMessage', () => store.dispatch(fetchMessages(currentChannelId)));
+socket.on('newMessage', () => {
+  const { currentChannelId: channelId } = store.getState();
+  store.dispatch(fetchMessages(channelId));
+});
 
 render(
   <Provider store={store}>

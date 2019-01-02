@@ -5,6 +5,7 @@ import connect from '../connect';
 const mapStateToProps = (state) => {
   const props = {
     messages: messagesSelector(state),
+    currentChannelId: state.currentChannelId,
   };
   return props;
 };

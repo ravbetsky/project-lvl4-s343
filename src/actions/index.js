@@ -11,6 +11,10 @@ export const createMessageRequest = createAction('MESSAGE_CREATE_REQUEST');
 export const createMessageSuccess = createAction('MESSAGE_CREATE_SUCCESS');
 export const createMessageFailure = createAction('MESSAGE_CREATE_FAILURE');
 
+export const createChannelRequest = createAction('CHANNEL_CREATE_REQUEST');
+export const createChannelSuccess = createAction('CHANNEL_CREATE_SUCCESS');
+export const createChannelFailure = createAction('CHANNEL_CREATE_FAILURE');
+
 export const fetchMessagesRequest = createAction('MESSAGES_FETCH_REQUEST');
 export const fetchMessagesSuccess = createAction('MESSAGES_FETCH_SUCCESS');
 export const fetchMessagesFailure = createAction('MESSAGES_FETCH_FAILURE');
@@ -61,4 +65,33 @@ export const createMessage = (data, channelId) => async (dispatch) => {
     console.log(e);
     dispatch(createMessageFailure());
   }
+};
+
+export const createChannel = data => async (dispatch) => {
+  dispatch(createChannelRequest());
+  try {
+    const url = routes.channelsUrl();
+    await axios.post(url,
+      {
+        data: {
+          attributes: {
+            name: data.name,
+          },
+        },
+      });
+    dispatch(createChannelSuccess());
+  } catch (e) {
+    console.log(e);
+    dispatch(createChannelFailure());
+  }
+};
+
+export const setChannel = channelId => async (dispatch) => {
+  dispatch(setCurrentChannelId(channelId));
+  dispatch(fetchMessages(channelId));
+};
+
+export const addChannel = data => async (dispatch) => {
+  dispatch(createChannel(data));
+  dispatch(fetchChannels());
 };
