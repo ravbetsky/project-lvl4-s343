@@ -24,6 +24,7 @@ export const fetchChannels = () => async (dispatch) => {
     const response = await axios.get(url);
     dispatch(fetchChannelsSuccess({ channels: response.data }));
   } catch (e) {
+    console.log(e);
     dispatch(fetchChannelsFailure());
   }
 };
@@ -35,6 +36,7 @@ export const fetchMessages = channelId => async (dispatch) => {
     const response = await axios.get(url);
     dispatch(fetchMessagesSuccess({ messages: response.data }));
   } catch (e) {
+    console.log(e);
     dispatch(fetchMessagesFailure());
   }
 };
@@ -54,6 +56,7 @@ export const createMessage = (data, channelId) => async (dispatch) => {
       });
     dispatch(createMessageSuccess());
   } catch (e) {
+    console.log(e);
     dispatch(createMessageFailure());
   }
 };

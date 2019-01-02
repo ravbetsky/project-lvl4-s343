@@ -1,8 +1,8 @@
 import cookies from 'js-cookie';
 import React from 'react';
 import ChannelsList from '../containers/ChannelsList';
-import MessagesList from '../containers/MessagesList';
-import NewMessageForm from '../containers/NewMessageForm';
+import MessagesList from './MessagesList';
+import NewMessageForm from './NewMessageForm';
 
 const App = () => {
   const user = cookies.get('user');
