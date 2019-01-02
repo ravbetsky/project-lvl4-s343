@@ -18,7 +18,13 @@ const messages = handleActions({
 
 const currentChannelId = handleActions({
   [actions.setCurrentChannelId](state, { payload }) {
-    return payload.currentChannelId;
+    return payload;
+  },
+}, {});
+
+const user = handleActions({
+  [actions.setUserName](state, { payload }) {
+    return payload;
   },
 }, {});
 
@@ -39,5 +45,6 @@ export default combineReducers({
   channels,
   messages,
   currentChannelId,
+  user,
   form: formReducer,
 });

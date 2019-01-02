@@ -15,7 +15,9 @@ export const fetchMessagesRequest = createAction('MESSAGES_FETCH_REQUEST');
 export const fetchMessagesSuccess = createAction('MESSAGES_FETCH_SUCCESS');
 export const fetchMessagesFailure = createAction('MESSAGES_FETCH_FAILURE');
 
-export const setCurrentChannelId = createAction('SET_CHANNEL_ID');
+export const setCurrentChannelId = createAction('CHANNEL_ID_SET');
+
+export const setUserName = createAction('USERNAME_SET');
 
 export const fetchChannels = () => async (dispatch) => {
   dispatch(fetchChannelsRequest());

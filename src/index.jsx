@@ -12,7 +12,7 @@ import { render } from 'react-dom';
 import io from 'socket.io-client';
 import reducers from './reducers';
 import App from './components/App';
-import { fetchChannels, fetchMessages } from './actions';
+import { fetchChannels, fetchMessages, setUserName } from './actions';
 
 if (!cookies.get('user')) {
   cookies.set('user', faker.name.findName());
@@ -30,6 +30,7 @@ const store = createStore(
   {
     channels: [],
     messages: [],
+    user: null,
     currentChannelId,
   },
   typeof devtoolMiddleware === 'undefined'
@@ -37,6 +38,7 @@ const store = createStore(
     : compose(applyMiddleware(thunk), devtoolMiddleware),
 );
 
+store.dispatch(setUserName(cookies.get('user')));
 store.dispatch(fetchChannels());
 store.dispatch(fetchMessages(currentChannelId));
 

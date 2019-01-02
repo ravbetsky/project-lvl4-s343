@@ -1,12 +1,12 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import cookies from 'js-cookie';
 import connect from '../connect';
 
 const mapStateToProps = (state) => {
   const props = {
     messageCreatingState: state.messageCreatingState,
     currentChannelId: state.currentChannelId,
+    user: state.user,
   };
   return props;
 };
@@ -14,9 +14,14 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps)
 class NewMessageForm extends React.Component {
   sendMessage = async (values) => {
-    const { currentChannelId, createMessage, reset } = this.props;
+    const {
+      currentChannelId,
+      createMessage,
+      reset,
+      user,
+    } = this.props;
     await createMessage(
-      { ...values, author: cookies.get('user') },
+      { ...values, author: user },
       currentChannelId,
     );
     return reset();
