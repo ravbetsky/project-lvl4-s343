@@ -16,10 +16,17 @@ export const addChannel = createAction('CHANNEL_ADD');
 export const removeChannelRequest = createAction('CHANNEL_REMOVE_REQUEST');
 export const removeChannelSuccess = createAction('CHANNEL_REMOVE_SUCCESS');
 export const removeChannelFailure = createAction('CHANNEL_REMOVE_FAILURE');
+export const deleteChannel = createAction('CHANNEL_DELETE');
 
 export const setCurrentChannelId = createAction('CHANNEL_ID_SET');
 
 export const setUserName = createAction('USERNAME_SET');
+
+export const setActionChannelId = createAction('ACTION_CHANNEL_SET');
+// ui
+export const modalToggle = createAction('MODAL_TOGGLE');
+
+// ----
 
 export const createMessage = (data, channelId) => async (dispatch) => {
   dispatch(createMessageRequest());

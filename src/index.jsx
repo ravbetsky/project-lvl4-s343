@@ -45,6 +45,10 @@ socket.on('newMessage', ({ data: { attributes } }) => {
 socket.on('newChannel', ({ data: { attributes } }) => {
   store.dispatch(actions.addChannel(attributes));
 });
+socket.on('removeChannel', ({ data: { id } }) => {
+  store.dispatch(actions.deleteChannel(id));
+  store.dispatch(actions.setCurrentChannelId(null));
+});
 
 render(
   <Provider store={store}>

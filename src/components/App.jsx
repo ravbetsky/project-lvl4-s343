@@ -4,25 +4,38 @@ import MessagesList from './MessagesList';
 import NewMessageForm from './NewMessageForm';
 import NewChannelForm from './NewChannelForm';
 import UserNav from './UserNav';
-import ModalComponent from './ModalComponent';
+import ModalDeleteChannel from './ModalDeleteChannel';
+import connect from '../connect';
 
-const App = () => (
-  <div>
-    <UserNav />
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-lg-3 col-md-4">
-          <h3>Channels</h3>
-          <NewChannelForm />
-          <ChannelsList />
+const mapStateToProps = (state) => {
+  const props = {
+    currentChannelId: state.currentChannelId,
+  };
+  return props;
+};
+
+@connect(mapStateToProps)
+export default class App extends React.Component {
+  render() {
+    const { currentChannelId } = this.props;
+    return (
+      <div>
+        <UserNav />
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-3 col-md-4">
+              <h3>Channels</h3>
+              <NewChannelForm />
+              <ChannelsList />
+            </div>
+            <div className="col-lg-9 col-md-8">
+              {currentChannelId && <MessagesList />}
+              {currentChannelId && <NewMessageForm />}
+            </div>
+          </div>
         </div>
-        <div className="col-lg-9 col-md-8">
-          <MessagesList />
-          <NewMessageForm />
-        </div>
+        <ModalDeleteChannel />
       </div>
-    </div>
-    <ModalComponent />
-  </div>);
-
-export default App;
+    );
+  }
+}
