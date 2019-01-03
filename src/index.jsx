@@ -10,20 +10,14 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import io from 'socket.io-client';
+import { keyBy } from 'lodash';
 import reducers from './reducers';
 import App from './components/App';
-import {
-  fetchChannels,
-  fetchMessages,
-  setUserName,
-  setChannel,
-} from './actions';
+import * as actions from './actions';
 
 if (!cookies.get('user')) {
   cookies.set('user', faker.name.findName());
 }
-
-const { currentChannelId } = gon;
 
 /* eslint-disable no-underscore-dangle */
 const ext = window.__REDUX_DEVTOOLS_EXTENSION__;
@@ -33,24 +27,23 @@ const devtoolMiddleware = ext && ext();
 const store = createStore(
   reducers,
   {
-    channels: [],
-    messages: [],
-    user: null,
-    currentChannelId,
+    channels: keyBy(gon.channels, channel => channel.id),
+    messages: keyBy(gon.messages, message => message.id),
+    currentChannelId: gon.currentChannelId,
   },
   typeof devtoolMiddleware === 'undefined'
     ? compose(applyMiddleware(thunk))
     : compose(applyMiddleware(thunk), devtoolMiddleware),
 );
 
-store.dispatch(setUserName(cookies.get('user')));
-store.dispatch(fetchChannels());
-store.dispatch(setChannel(currentChannelId));
+store.dispatch(actions.setUserName(cookies.get('user')));
 
 const socket = io();
-socket.on('newMessage', () => {
-  const { currentChannelId: channelId } = store.getState();
-  store.dispatch(fetchMessages(channelId));
+socket.on('newMessage', ({ data: { attributes } }) => {
+  store.dispatch(actions.addMessage(attributes));
+});
+socket.on('newChannel', ({ data: { attributes } }) => {
+  store.dispatch(actions.addChannel(attributes));
 });
 
 render(

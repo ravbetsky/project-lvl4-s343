@@ -3,17 +3,20 @@ import { Field, reduxForm } from 'redux-form';
 import connect from '../connect';
 
 @connect()
-class NewChannelForm extends React.Component {
-  addNewChannel = async (values) => {
-    const { addChannel, reset } = this.props;
-    await addChannel({ ...values });
+@reduxForm(({
+  form: 'newChannel',
+}))
+export default class NewChannelForm extends React.Component {
+  createNewChannel = async (values) => {
+    const { createChannel, reset } = this.props;
+    await createChannel({ ...values });
     return reset();
   }
 
   render() {
     const { handleSubmit, submitting } = this.props;
     return (
-      <form className="form-inline mb-2" onSubmit={handleSubmit(this.addNewChannel)}>
+      <form className="form-inline mb-2" onSubmit={handleSubmit(this.createNewChannel)}>
         <div className="form-group mr-3">
           <Field name="name" required component="input" type="text" className="form-control" />
         </div>
@@ -22,7 +25,3 @@ class NewChannelForm extends React.Component {
     );
   }
 }
-
-export default reduxForm({
-  form: 'newChannel',
-})(NewChannelForm);

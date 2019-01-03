@@ -12,18 +12,18 @@ const mapStateToProps = (state) => {
 };
 
 @connect(mapStateToProps)
-class NewMessageForm extends React.Component {
+@reduxForm(({
+  form: 'newMessage',
+}))
+export default class NewMessageForm extends React.Component {
   sendMessage = async (values) => {
     const {
+      user,
       currentChannelId,
       createMessage,
       reset,
-      user,
     } = this.props;
-    await createMessage(
-      { ...values, author: user },
-      currentChannelId,
-    );
+    await createMessage({ ...values, author: user }, currentChannelId);
     return reset();
   }
 
@@ -39,7 +39,3 @@ class NewMessageForm extends React.Component {
     );
   }
 }
-
-export default reduxForm({
-  form: 'newMessage',
-})(NewMessageForm);

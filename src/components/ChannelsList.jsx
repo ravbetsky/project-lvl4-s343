@@ -13,12 +13,21 @@ const mapStateToProps = (state) => {
 
 @connect(mapStateToProps)
 export default class ChannelsList extends React.Component {
-  setActiveChannel = id => () => {
-    const { setChannel } = this.props;
-    return setChannel(id);
+  activeChannel = id => () => {
+    const { setCurrentChannelId } = this.props;
+    return setCurrentChannelId(id);
   }
 
-  renderChannelItem = ({ id, name }) => {
+  renderActions = () => {
+    const id = 1;
+    return (
+      <div className="actions">
+        <button type="button" className="btn btn-sm btn-light">{`rename ${id}`}</button>
+        <button type="button" className="btn btn-sm btn-danger">x</button>
+      </div>);
+  }
+
+  renderChannelItem = ({ id, name, removable }) => {
     const { currentChannelId } = this.props;
     const className = cn(
       'list-group-item',
@@ -26,8 +35,9 @@ export default class ChannelsList extends React.Component {
       { active: id === currentChannelId },
     );
     return (
-      <button type="button" key={id} onClick={this.setActiveChannel(id)} className={className}>
+      <button type="button" key={id} onClick={this.activeChannel(id)} className={className}>
         {name}
+        {removable && this.renderActions(name, id)}
       </button>
     );
   }

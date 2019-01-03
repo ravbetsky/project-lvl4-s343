@@ -5,29 +5,26 @@ import connect from '../connect';
 const mapStateToProps = (state) => {
   const props = {
     messages: messagesSelector(state),
-    currentChannelId: state.currentChannelId,
   };
   return props;
 };
 
 @connect(mapStateToProps)
 export default class MessagesList extends React.Component {
-  renderMessage = ({ attributes }, i) => {
-    const { author, content } = attributes;
-    return (
-      <li key={i}>
-        <b>{author}</b>
-        <br />
-        {content}
-      </li>
-    );
-  }
-
   render() {
     const { messages } = this.props;
     return (
       <ul>
-        {messages.map(this.renderMessage)}
+        {messages.map((message) => {
+          const { id, author, content } = message;
+          return (
+            <li key={id}>
+              <b>{author}</b>
+              <br />
+              {content}
+            </li>
+          );
+        })}
       </ul>
     );
   }

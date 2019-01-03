@@ -3,49 +3,23 @@ import { createAction } from 'redux-actions';
 
 import routes from '../routes';
 
-export const fetchChannelsRequest = createAction('CHANNELS_FETCH_REQUEST');
-export const fetchChannelsSuccess = createAction('CHANNELS_FETCH_SUCCESS');
-export const fetchChannelsFailure = createAction('CHANNELS_FETCH_FAILURE');
-
 export const createMessageRequest = createAction('MESSAGE_CREATE_REQUEST');
 export const createMessageSuccess = createAction('MESSAGE_CREATE_SUCCESS');
 export const createMessageFailure = createAction('MESSAGE_CREATE_FAILURE');
+export const addMessage = createAction('MESSAGE_ADD');
 
 export const createChannelRequest = createAction('CHANNEL_CREATE_REQUEST');
 export const createChannelSuccess = createAction('CHANNEL_CREATE_SUCCESS');
 export const createChannelFailure = createAction('CHANNEL_CREATE_FAILURE');
+export const addChannel = createAction('CHANNEL_ADD');
 
-export const fetchMessagesRequest = createAction('MESSAGES_FETCH_REQUEST');
-export const fetchMessagesSuccess = createAction('MESSAGES_FETCH_SUCCESS');
-export const fetchMessagesFailure = createAction('MESSAGES_FETCH_FAILURE');
+export const removeChannelRequest = createAction('CHANNEL_REMOVE_REQUEST');
+export const removeChannelSuccess = createAction('CHANNEL_REMOVE_SUCCESS');
+export const removeChannelFailure = createAction('CHANNEL_REMOVE_FAILURE');
 
 export const setCurrentChannelId = createAction('CHANNEL_ID_SET');
 
 export const setUserName = createAction('USERNAME_SET');
-
-export const fetchChannels = () => async (dispatch) => {
-  dispatch(fetchChannelsRequest());
-  try {
-    const url = routes.channelsUrl();
-    const response = await axios.get(url);
-    dispatch(fetchChannelsSuccess({ channels: response.data }));
-  } catch (e) {
-    console.log(e);
-    dispatch(fetchChannelsFailure());
-  }
-};
-
-export const fetchMessages = channelId => async (dispatch) => {
-  dispatch(fetchMessagesRequest());
-  try {
-    const url = routes.messagesUrl(channelId);
-    const response = await axios.get(url);
-    dispatch(fetchMessagesSuccess({ messages: response.data }));
-  } catch (e) {
-    console.log(e);
-    dispatch(fetchMessagesFailure());
-  }
-};
 
 export const createMessage = (data, channelId) => async (dispatch) => {
   dispatch(createMessageRequest());
@@ -86,12 +60,14 @@ export const createChannel = data => async (dispatch) => {
   }
 };
 
-export const setChannel = channelId => async (dispatch) => {
-  dispatch(setCurrentChannelId(channelId));
-  dispatch(fetchMessages(channelId));
-};
-
-export const addChannel = data => async (dispatch) => {
-  dispatch(createChannel(data));
-  dispatch(fetchChannels());
+export const removeChannel = channelId => async (dispatch) => {
+  dispatch(removeChannelRequest());
+  try {
+    const url = routes.channelsUrl(channelId);
+    await axios.delete(url);
+    dispatch(removeChannelSuccess());
+  } catch (e) {
+    console.log(e);
+    dispatch(removeChannelFailure());
+  }
 };

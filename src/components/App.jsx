@@ -4,6 +4,7 @@ import MessagesList from './MessagesList';
 import NewMessageForm from './NewMessageForm';
 import NewChannelForm from './NewChannelForm';
 import UserNav from './UserNav';
+import ModalComponent from './ModalComponent';
 
 const App = () => (
   <div>
@@ -21,6 +22,7 @@ const App = () => (
         </div>
       </div>
     </div>
+    <ModalComponent />
   </div>);
 
 export default App;
