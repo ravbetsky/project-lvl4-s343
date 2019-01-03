@@ -5,6 +5,7 @@ import NewMessageForm from './NewMessageForm';
 import NewChannelForm from './NewChannelForm';
 import UserNav from './UserNav';
 import ModalDeleteChannel from './ModalDeleteChannel';
+import ModalRenameChannel from './ModalRenameChannel';
 import connect from '../connect';
 
 const mapStateToProps = (state) => {
@@ -35,6 +36,7 @@ export default class App extends React.Component {
           </div>
         </div>
         <ModalDeleteChannel />
+        <ModalRenameChannel />
       </div>
     );
   }

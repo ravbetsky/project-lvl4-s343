@@ -25,10 +25,17 @@ export default class ChannelsList extends React.Component {
     modalToggle('deleteChannel');
   }
 
+  handleRename = id => (e) => {
+    e.stopPropagation();
+    const { modalToggle, setActionChannelId } = this.props;
+    setActionChannelId(id);
+    modalToggle('renameChannel');
+  }
+
   renderActions = (id) => {
     return (
       <div className="actions">
-        <button type="button" className="btn btn-sm btn-light">rename</button>
+        <button type="button" className="btn btn-sm btn-light" onClick={this.handleRename(id)}>rename</button>
         <button type="button" className="btn btn-sm btn-danger" onClick={this.handleDelete(id)}>x</button>
       </div>);
   }

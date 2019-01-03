@@ -18,15 +18,18 @@ export const removeChannelSuccess = createAction('CHANNEL_REMOVE_SUCCESS');
 export const removeChannelFailure = createAction('CHANNEL_REMOVE_FAILURE');
 export const deleteChannel = createAction('CHANNEL_DELETE');
 
+export const patchChannelRequest = createAction('CHANNEL_PATCH_REQUEST');
+export const patchChannelSuccess = createAction('CHANNEL_PATCH_SUCCESS');
+export const patchChannelFailure = createAction('CHANNEL_PATCH_FAILURE');
+export const renameChannel = createAction('CHANNEL_RENAME');
+
 export const setCurrentChannelId = createAction('CHANNEL_ID_SET');
 
 export const setUserName = createAction('USERNAME_SET');
 
 export const setActionChannelId = createAction('ACTION_CHANNEL_SET');
-// ui
-export const modalToggle = createAction('MODAL_TOGGLE');
 
-// ----
+export const modalToggle = createAction('MODAL_TOGGLE');
 
 export const createMessage = (data, channelId) => async (dispatch) => {
   dispatch(createMessageRequest());
@@ -76,5 +79,25 @@ export const removeChannel = channelId => async (dispatch) => {
   } catch (e) {
     console.log(e);
     dispatch(removeChannelFailure());
+  }
+};
+
+export const patchChannel = (data, channelId) => async (dispatch) => {
+  dispatch(patchChannelRequest());
+  try {
+    const url = routes.channelsUrl(channelId);
+    await axios.patch(url,
+      {
+        data: {
+          attributes: {
+            name: data.name,
+            id: data.id,
+          },
+        },
+      });
+    dispatch(patchChannelSuccess());
+  } catch (e) {
+    console.log(e);
+    dispatch(patchChannelFailure());
   }
 };

@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
-import { omit } from 'lodash';
+import { omit, mapValues } from 'lodash';
 import * as actions from '../actions';
 
 const channels = handleActions({
@@ -11,6 +11,13 @@ const channels = handleActions({
   },
   [actions.deleteChannel](state, { payload }) {
     return omit(state, payload);
+  },
+  [actions.renameChannel](state, { payload: { name, id } }) {
+    return mapValues(state, channel => (
+      channel.id !== id
+        ? channel
+        : { ...channel, name }
+    ));
   },
 }, {});
 
