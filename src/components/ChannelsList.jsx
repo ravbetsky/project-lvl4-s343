@@ -32,7 +32,8 @@ export default class ChannelsList extends React.Component {
     modalToggle('renameChannel');
   }
 
-  renderActions = (id) => {
+  renderActions = (channelId) => {
+    const id = channelId;
     return (
       <div className="actions">
         <button type="button" className="btn btn-sm btn-light" onClick={this.handleRename(id)}>rename</button>

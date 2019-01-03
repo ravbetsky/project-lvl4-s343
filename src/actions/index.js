@@ -46,7 +46,7 @@ export const createMessage = (data, channelId) => async (dispatch) => {
       });
     dispatch(createMessageSuccess());
   } catch (e) {
-    console.log(e);
+    console.log(e); // eslint-disable-line no-console
     dispatch(createMessageFailure());
   }
 };
@@ -65,7 +65,7 @@ export const createChannel = data => async (dispatch) => {
       });
     dispatch(createChannelSuccess());
   } catch (e) {
-    console.log(e);
+    console.log(e); // eslint-disable-line no-console
     dispatch(createChannelFailure());
   }
 };
@@ -77,7 +77,7 @@ export const removeChannel = channelId => async (dispatch) => {
     await axios.delete(url);
     dispatch(removeChannelSuccess());
   } catch (e) {
-    console.log(e);
+    console.log(e); // eslint-disable-line no-console
     dispatch(removeChannelFailure());
   }
 };
@@ -97,7 +97,7 @@ export const patchChannel = (data, channelId) => async (dispatch) => {
       });
     dispatch(patchChannelSuccess());
   } catch (e) {
-    console.log(e);
+    console.log(e); // eslint-disable-line no-console
     dispatch(patchChannelFailure());
   }
 };
