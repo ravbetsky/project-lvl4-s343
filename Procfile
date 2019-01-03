@@ -1,1 +1,1 @@
-web: make build && make run
+web: make run
