@@ -1,20 +1,3 @@
 .fade.in {
   opacity: 1;
 }
-
-.actions {
-  float: right;
-}
-
-.actions .btn-sm {
-  padding: 0 .5rem;
-  margin-left: 10px;
-}
-
-.modal-backdrop {
-  background-color: rgba(0,0,0,0.2);
-}
-
-.modal-dialog {
-  margin: 5.75rem auto;
-}

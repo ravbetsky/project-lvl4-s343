@@ -18,7 +18,7 @@ export default class NewChannelForm extends React.Component {
     return (
       <form className="form-inline mb-2" onSubmit={handleSubmit(this.createNewChannel)}>
         <div className="form-group mr-3">
-          <Field name="name" required component="input" type="text" className="form-control" />
+          <Field name="name" required component="input" type="text" className="form-control" disabled={submitting} />
         </div>
         <button type="submit" className="btn btn-primary btn-sm" disabled={submitting}>Add</button>
       </form>

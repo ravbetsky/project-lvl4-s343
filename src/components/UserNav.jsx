@@ -1,19 +1,9 @@
 import React from 'react';
-import connect from '../connect';
+import { UserConsumer } from './UserContext';
 
-const mapStateToProps = (state) => {
-  const props = {
-    user: state.user,
-  };
-  return props;
-};
+const UserNav = () => (
+  <UserConsumer>
+    {context => <nav className="navbar navbar-light bg-light mb-3">{context}</nav>}
+  </UserConsumer>);
 
-@connect(mapStateToProps)
-export default class UserNav extends React.Component {
-  render() {
-    const { user } = this.props;
-    return (
-      <nav className="navbar navbar-light bg-light mb-3">{user}</nav>
-    );
-  }
-}
+export default UserNav;

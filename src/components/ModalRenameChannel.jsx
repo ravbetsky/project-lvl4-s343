@@ -47,11 +47,11 @@ export default class ModalRenameChannel extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <div className="form-group mx-3">
-              <Field name="name" required component="input" type="text" className="form-control" />
+              <Field name="name" required component="input" type="text" className="form-control" disabled={submitting} />
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="secondary" onClick={this.handleClose}>Cancel</Button>
+            <Button bsStyle="secondary" onClick={this.handleClose} disabled={submitting}>Cancel</Button>
             <Button type="submit" bsStyle="primary" disabled={submitting}>Save changes</Button>
           </Modal.Footer>
         </form>

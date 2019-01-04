@@ -6,11 +6,13 @@ import NewChannelForm from './NewChannelForm';
 import UserNav from './UserNav';
 import ModalDeleteChannel from './ModalDeleteChannel';
 import ModalRenameChannel from './ModalRenameChannel';
+import { UserProvider } from './UserContext';
 import connect from '../connect';
 
 const mapStateToProps = (state) => {
   const props = {
     currentChannelId: state.currentChannelId,
+    user: state.user,
   };
   return props;
 };
@@ -18,10 +20,12 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps)
 export default class App extends React.Component {
   render() {
-    const { currentChannelId } = this.props;
+    const { currentChannelId, user } = this.props;
     return (
       <div>
-        <UserNav />
+        <UserProvider value={user}>
+          <UserNav />
+        </UserProvider>
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-3 col-md-4">

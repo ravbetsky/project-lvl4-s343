@@ -32,7 +32,7 @@ export default class NewMessageForm extends React.Component {
     return (
       <form className="form-inline" onSubmit={handleSubmit(this.sendMessage)}>
         <div className="form-group mx-3">
-          <Field name="message" required component="input" type="text" className="form-control" />
+          <Field name="message" required component="input" type="text" className="form-control" disabled={submitting} />
         </div>
         <button type="submit" className="btn btn-primary btn-sm" disabled={submitting}>Send</button>
       </form>

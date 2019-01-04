@@ -101,3 +101,8 @@ export const patchChannel = (data, channelId) => async (dispatch) => {
     dispatch(patchChannelFailure());
   }
 };
+
+export const callAction = (channelId, actionName) => (dispatch) => {
+  dispatch(setActionChannelId(channelId));
+  dispatch(modalToggle(actionName));
+};
