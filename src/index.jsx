@@ -47,7 +47,6 @@ socket.on('newChannel', ({ data: { attributes } }) => {
 });
 socket.on('removeChannel', ({ data: { id } }) => {
   store.dispatch(actions.deleteChannel(id));
-  store.dispatch(actions.setCurrentChannelId(null));
 });
 socket.on('renameChannel', ({ data: { attributes } }) => {
   store.dispatch(actions.renameChannel(attributes));

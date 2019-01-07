@@ -1,13 +1,21 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
+
 import { Field, reduxForm } from 'redux-form';
 import connect from '../connect';
-
+import { actionChannelNameSelector } from '../selectors';
 
 const mapStateToProps = (state) => {
   const props = {
     ui: state.ui,
     actionChannelId: state.actionChannelId,
+    channelName: actionChannelNameSelector(state),
   };
   return props;
 };
@@ -17,13 +25,27 @@ const mapStateToProps = (state) => {
   form: 'renameChannel',
 }))
 export default class ModalRenameChannel extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    const { channelName } = nextProps;
+    const {
+      channelName: oldChannelName,
+      destroy,
+      initialize,
+    } = this.props;
+    if (channelName !== oldChannelName) {
+      destroy();
+      initialize({ channelName });
+    }
+  }
+
   handleSubmit = async (values) => {
     const {
       actionChannelId,
       patchChannel,
       reset,
     } = this.props;
-    await patchChannel({ ...values }, actionChannelId);
+    const { channelName: name } = values;
+    await patchChannel({ name }, actionChannelId);
     reset();
     this.handleClose();
   };
@@ -40,20 +62,27 @@ export default class ModalRenameChannel extends React.Component {
       submitting,
     } = this.props;
     return (
-      <Modal show={ui.modal === 'renameChannel'}>
+      <Modal isOpen={ui.modal === 'renameChannel'}>
         <form onSubmit={handleSubmit(this.handleSubmit)}>
-          <Modal.Header>
-            <Modal.Title>Enter new channel name</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+          <ModalHeader>
+            Enter new channel name
+          </ModalHeader>
+          <ModalBody>
             <div className="form-group mx-3">
-              <Field name="name" required component="input" type="text" className="form-control" disabled={submitting} />
+              <Field
+                name="channelName"
+                required
+                component="input"
+                type="text"
+                className="form-control"
+                disabled={submitting}
+              />
             </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button bsStyle="secondary" onClick={this.handleClose} disabled={submitting}>Cancel</Button>
-            <Button type="submit" bsStyle="primary" disabled={submitting}>Save changes</Button>
-          </Modal.Footer>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.handleClose} disabled={submitting}>Cancel</Button>
+            <Button type="submit" color="primary" disabled={submitting}>Save changes</Button>
+          </ModalFooter>
         </form>
       </Modal>
     );

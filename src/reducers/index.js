@@ -6,11 +6,11 @@ import { omit, mapValues } from 'lodash';
 import * as actions from '../actions';
 
 const channels = handleActions({
-  [actions.addChannel](state, { payload }) {
-    return { ...state, [payload.id]: payload };
+  [actions.addChannel](state, { payload: channel }) {
+    return { ...state, [channel.id]: channel };
   },
-  [actions.deleteChannel](state, { payload }) {
-    return omit(state, payload);
+  [actions.deleteChannel](state, { payload: channel }) {
+    return omit(state, channel);
   },
   [actions.renameChannel](state, { payload: { name, id } }) {
     return mapValues(state, channel => (
@@ -22,33 +22,33 @@ const channels = handleActions({
 }, {});
 
 const messages = handleActions({
-  [actions.addMessage](state, { payload }) {
-    return { ...state, [payload.id]: payload };
+  [actions.addMessage](state, { payload: message }) {
+    return { ...state, [message.id]: message };
   },
 }, {});
 
 const currentChannelId = handleActions({
-  [actions.setCurrentChannelId](state, { payload }) {
-    return payload;
+  [actions.setCurrentChannelId](state, { payload: channelId }) {
+    return channelId;
   },
 }, {});
 
 const actionChannelId = handleActions({
-  [actions.setActionChannelId](state, { payload }) {
-    return payload;
+  [actions.setActionChannelId](state, { payload: channelId }) {
+    return channelId;
   },
 }, {});
 
 const user = handleActions({
-  [actions.setUserName](state, { payload }) {
-    return payload;
+  [actions.setUserName](state, { payload: userName }) {
+    return userName;
   },
 }, {});
 
 // UI
 const ui = handleActions({
-  [actions.modalToggle](state, { payload }) {
-    return { ...state, modal: payload };
+  [actions.modalToggle](state, { payload: modalType }) {
+    return { ...state, modal: modalType };
   },
 }, {});
 

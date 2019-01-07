@@ -1,5 +1,11 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
 import connect from '../connect';
 
 
@@ -30,17 +36,17 @@ export default class ModalDeleteChannel extends React.Component {
   render() {
     const { ui } = this.props;
     return (
-      <Modal show={ui.modal === 'deleteChannel'}>
-        <Modal.Header>
-          <Modal.Title>Are you sure?</Modal.Title>
-        </Modal.Header>
+      <Modal isOpen={ui.modal === 'deleteChannel'}>
+        <ModalHeader>
+          Are you sure?
+        </ModalHeader>
 
-        <Modal.Body>You are going to delete this channel for everyone</Modal.Body>
+        <ModalBody>You are going to delete this channel for everyone</ModalBody>
 
-        <Modal.Footer>
-          <Button bsStyle="secondary" onClick={this.handleClose}>Cancel</Button>
-          <Button bsStyle="danger" onClick={this.handleDelete}>Confirm Delete</Button>
-        </Modal.Footer>
+        <ModalFooter>
+          <Button color="secondary" onClick={this.handleClose}>Cancel</Button>
+          <Button color="danger" onClick={this.handleDelete}>Confirm Delete</Button>
+        </ModalFooter>
       </Modal>
     );
   }
