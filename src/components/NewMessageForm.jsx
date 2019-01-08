@@ -44,7 +44,7 @@ export default class NewMessageForm extends React.Component {
             className="form-control"
             disabled={submitting}
             autoFocus
-            ref={ref => this.messageInput = ref}
+            ref={(ref) => { this.messageInput = ref; }}
             withRef
           />
         </div>
